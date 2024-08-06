@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart,addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 // code to show the products starts here
@@ -56,15 +56,13 @@ products.forEach((product) => {
 document.querySelector('.js-selecter-products').innerHTML = html;
 
 // to increase the count of cart number
-const cartNumber=document.querySelector('.cart-quantity');
 function toIncreaseCartQuantity(){
   let cartQuantity = 0;
-  cart.forEach((item)=>{
-    cartQuantity += item.count;
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.count;
     })
-  cartNumber.innerText = cartQuantity;
+    document.querySelector('.cart-quantity').innerText = cartQuantity;
 }
-
 
 // to show the transition of adding the product
 function popUpWhenAdding(productId){
@@ -73,25 +71,16 @@ function popUpWhenAdding(productId){
   showAdded.style.transition = 'opacity 0.3s'; 
   setTimeout(()=>{
       showAdded.style.opacity = 0;
-  },1500);
+  },1800);
 }
 
-function addToCart(productId){
-  let matchingProduct=cart.find(item => item.productId == productId);
-  if(matchingProduct){
-      matchingProduct.count++;
-  }else{
-      cart.push({productId: productId,count:1});
-  }
-}
-
+// main function used when clicked add to cart button
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener('click',()=>{
         const productId = button.dataset.productId ;
-        popUpWhenAdding(productId);
-        addToCart(productId);
-        toIncreaseCartQuantity();
-
+        popUpWhenAdding(productId); // to show pop up
+        addToCart(productId); // to add the item in the cart
+        toIncreaseCartQuantity(); // to increase the DOM of cart quantity
     })
 })
 
