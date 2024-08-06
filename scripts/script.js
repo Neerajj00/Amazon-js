@@ -53,12 +53,16 @@ products.forEach((product) => {
           </button>
         </div>`
 })
-
 document.querySelector('.js-selecter-products').innerHTML = html;
 
 // to increase the count of cart number
 const cartNumber=document.querySelector('.cart-quantity');
 let cartQuantity = 0;
+function toIncreaseCartQuantity(){
+  cartQuantity++;
+  cartNumber.innerText = cartQuantity;
+}
+
 
 // to show the transition of adding the product
 function popUpWhenAdding(productId){
@@ -69,10 +73,12 @@ function popUpWhenAdding(productId){
       showAdded.style.opacity = 0;
   },1500);
 }
+
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener('click',()=>{
         const productId = button.dataset.productId ;
         popUpWhenAdding(productId);
+
         // if adding a product more than one time
         let matchingProduct;
         cart.forEach((item)=>{
@@ -82,14 +88,11 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
         });
         if(matchingProduct){
             matchingProduct.count++;
-            cartQuantity++;
-            cartNumber.innerText = cartQuantity;
+            toIncreaseCartQuantity();
         }else{
             cart.push({productId: productId,count:1});
-            cartQuantity++;
-            cartNumber.innerText = cartQuantity;
+            toIncreaseCartQuantity();
         }
     })
 })
-
 
