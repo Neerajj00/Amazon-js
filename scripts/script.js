@@ -1,4 +1,7 @@
+import {cart} from '../data/cart.js';
+import {products} from '../data/products.js';
 
+// code to show the products starts here
 let html = ``;
 products.forEach((product) => {
     html += `<div class="product-container">
@@ -50,27 +53,33 @@ products.forEach((product) => {
           </button>
         </div>`
 })
+
 document.querySelector('.js-selecter-products').innerHTML = html;
 
-let cartNumber=document.querySelector('.cart-quantity');
+// to increase the count of cart number
+const cartNumber=document.querySelector('.cart-quantity');
 let cartQuantity = 0;
+
+// to show the transition of adding the product
+function popUpWhenAdding(productId){
+  let showAdded = document.querySelector(`.js-${productId}`);
+  showAdded.style.opacity = 1;
+  showAdded.style.transition = 'opacity 0.3s'; 
+  setTimeout(()=>{
+      showAdded.style.opacity = 0;
+  },1500);
+}
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener('click',()=>{
         const productId = button.dataset.productId ;
+        popUpWhenAdding(productId);
+        // if adding a product more than one time
         let matchingProduct;
         cart.forEach((item)=>{
-            if( item.productId == productId){
-                matchingProduct = item;
-            }
+          if( item.productId == productId){
+              matchingProduct = item;
+          }
         });
-
-        let showAdded = document.querySelector(`.js-${productId}`);
-        showAdded.style.opacity = 1;
-        showAdded.style.transition = 'opacity 0.3s'; 
-        setTimeout(()=>{
-            showAdded.style.opacity = 0;
-        },1500);
-        
         if(matchingProduct){
             matchingProduct.count++;
             cartQuantity++;
