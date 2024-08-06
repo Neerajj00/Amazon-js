@@ -58,11 +58,10 @@ document.querySelector('.js-selecter-products').innerHTML = html;
 
 // to increase the count of cart number
 function toIncreaseCartQuantity(){
-  let cartQuantity = 0;
-  cart.forEach((cartItem)=>{
-    cartQuantity += cartItem.count;
-    })
-    document.querySelector('.cart-quantity').innerText = cartQuantity;
+  let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity')) || 0;
+  cartQuantity = cart.reduce((total, cartItem) => total + cartItem.count, 0);
+  localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+  document.querySelector('.cart-quantity').innerText = cartQuantity;
 }
 
 // to show the transition of adding the product
