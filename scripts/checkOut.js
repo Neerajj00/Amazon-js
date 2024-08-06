@@ -1,5 +1,6 @@
 import {cart} from '../data/cart.js';
 import {products} from '../data/products.js';
+import {priceConverter} from '../scripts/utils/currency.js';
 
 
 
@@ -27,7 +28,7 @@ cart.forEach((cartItem)=>{
                 ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                  $${matchingProduct.priceCents/100}
+                  $${priceConverter(matchingProduct.priceCents)}
                 </div>
                 <div class="product-quantity">
                   <span>
