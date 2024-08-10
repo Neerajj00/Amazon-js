@@ -58,11 +58,16 @@ document.querySelector('.js-selecter-products').innerHTML = html;
 
 // to increase the count of cart number
 function toIncreaseCartQuantity(){
-  let cartQuantity = JSON.parse(localStorage.getItem('cartQuantity')) || 0;
-  cartQuantity = cart.reduce((total, cartItem) => total + cartItem.count, 0);
-  localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
-  document.querySelector('.cart-quantity').innerText = cartQuantity;
-}
+    let cartQuantity=0;
+    cart.forEach((item)=>{
+      cartQuantity += item.count;
+    })
+    // Store the updated quantity in local storage
+    localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+    cartQuantity = +localStorage.getItem('cartQuantity');
+    // Update the cart quantity displayed on the webpage
+    document.querySelector('.cart-quantity').innerText = cartQuantity;
+  }
 
 // to show the transition of adding the product
 function popUpWhenAdding(productId){
