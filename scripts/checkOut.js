@@ -14,9 +14,18 @@ cart.forEach((cartItem)=>{
             matchingProduct=product;
         }
     })
+
+    let deliveryOptionId = cartItem.deliveryOptionId;
+    let deliveryOption ;
+    deliveryOptions.forEach((option)=>{
+      if(option.id == deliveryOptionId) deliveryOption = option;
+    })
+    let todayDate = dayjs();
+    const day = todayDate.add(deliveryOption.deliveryDays,'days');
+    const formattedDay = day.format('dddd, MMMM D');
     cartHtml += `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
-              Delivery date: Tuesday, June 21
+              Delivery date: ${formattedDay}
             </div>
 
             <div class="cart-item-details-grid">
@@ -47,7 +56,7 @@ cart.forEach((cartItem)=>{
                 <div class="delivery-options-title">
                   Choose a delivery option: 
                 </div>
-                ${calculateDeliveryTime(deliveryOptions,matchingProduct)}
+                ${calculateDeliveryTime(deliveryOptions,matchingProduct,cartItem)}
               </div>
 
             </div>
@@ -64,17 +73,21 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
   })
 })
 
-function calculateDeliveryTime(deliveryOptions,matchingProduct){
+function calculateDeliveryTime(deliveryOptions,matchingProduct,cartItem){
   const todayDate = dayjs();
   let deliveryhtml='';
   deliveryOptions.forEach((deliveryOption)=>{
     const day = todayDate.add(deliveryOption.deliveryDays,'days');
     const formattedDay = day.format('dddd, MMMM D');
     let priceString = deliveryOption.priceCents > 0 ? priceConverter(deliveryOption.priceCents) : 'FREE' ;
+    let ischecked = deliveryOption.id == cartItem.deliveryOptionId;
     deliveryhtml += 
     `
+
       <div class="delivery-option">
-        <input type="radio" class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
+        <input type="radio"
+        ${ischecked ? 'checked' : ''}
+        class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
         <div>
           <div class="delivery-option-date">
             ${formattedDay}
@@ -89,5 +102,3 @@ function calculateDeliveryTime(deliveryOptions,matchingProduct){
   return deliveryhtml;
 }
 
-const today = dayjs();
-console.log(today.format('dddd, MMMM D'));
