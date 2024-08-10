@@ -57,17 +57,35 @@ products.forEach((product) => {
 document.querySelector('.js-selecter-products').innerHTML = html;
 
 // to increase the count of cart number
-function toIncreaseCartQuantity(){
-    let cartQuantity=0;
-    cart.forEach((item)=>{
+function updateCartQuantityDisplay() {
+  // Retrieve the stored cart quantity from localStorage
+  let cartQuantity = +localStorage.getItem('cartQuantity') || 0; // Default to 0 if null or not set
+
+  // Update the cart quantity displayed on the webpage
+  document.querySelector('.cart-quantity').innerText = cartQuantity;
+}
+
+// Call this function on page load to ensure the cart quantity is displayed correctly
+window.onload = function() {
+  toIncreaseCartQuantity();
+  updateCartQuantityDisplay();
+};
+
+// Function to increase cart quantity and update it in localStorage
+function toIncreaseCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((item) => {
       cartQuantity += item.count;
-    })
-    // Store the updated quantity in local storage
-    localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
-    cartQuantity = +localStorage.getItem('cartQuantity');
-    // Update the cart quantity displayed on the webpage
-    document.querySelector('.cart-quantity').innerText = cartQuantity;
-  }
+  });
+
+  // Store the updated quantity in local storage
+  localStorage.setItem('cartQuantity', cartQuantity.toString());
+
+  // Update the cart quantity displayed on the webpage
+  updateCartQuantityDisplay();
+}
+
 
 // to show the transition of adding the product
 function popUpWhenAdding(productId){
