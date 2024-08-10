@@ -1,7 +1,8 @@
 import {cart,removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {priceConverter} from '../scripts/utils/currency.js';
-
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {deliveryOptions} from '../data/deliveryOptions.js';
 
 
 let cartHtml=``;
@@ -100,3 +101,31 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
     container.remove();
   })
 })
+
+function calculateDeliveryTime(deliveryOptions){
+  const todayDate = dayjs();
+  let deliveryhtml;
+  deliveryOptions.forEach((deliveryOption)=>{
+    const day = deliveryOption.add(deliveryOption.deliveryDays,'days');
+    const formattedDay = day.format('dddd, MMMM d');
+    let priceString = deliveryOption.priceCents > 0 ? priceConverter(deliveryOption.priceCents) : 'FREE' ;
+    deliveryhtml += 
+    `
+      <div class="delivery-option">
+        <input type="radio" class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
+        <div>
+          <div class="delivery-option-date">
+            ${formattedDay}
+          </div>
+          <div class="delivery-option-price">
+            $${priceString} - Shipping
+          </div>
+        </div>
+      </div>
+    `
+  })
+  return deliveryhtml;
+}
+
+const today = dayjs();
+console.log(today.format('dddd, MMMM D'));
