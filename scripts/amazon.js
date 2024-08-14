@@ -77,10 +77,8 @@ document.querySelectorAll('.js-add-to-cart')
       const productId = button.dataset.productId;
       let popUp=document.querySelector(`.added-to-cart-${productId}`);
       popUp.style.opacity='1';
-      popUp.style.transition = 'all .15s';
       setTimeout(()=>{
         popUp.style.opacity='0';
-        popUp.style.transition = 'all .15s';
       },1000);
       Personalcart.addToCart(productId);
       updateCartQuantity();
