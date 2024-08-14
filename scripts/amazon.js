@@ -60,16 +60,7 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-function updateCartQuantity() {
-  let cartQuantity = 0;
 
-  Personalcart.cartItems.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
-
-  document.querySelector('.js-cart-quantity')
-    .innerHTML = cartQuantity;
-}
 
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
@@ -81,6 +72,7 @@ document.querySelectorAll('.js-add-to-cart')
         popUp.style.opacity='0';
       },1000);
       Personalcart.addToCart(productId);
-      updateCartQuantity();
+      
+      Personalcart.calculateQuantity();
     });
   });

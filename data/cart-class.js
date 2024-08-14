@@ -72,8 +72,22 @@ class cart {
         matchingItem.deliveryOptionId = deliveryOptionId;
         
         this.saveToStorage();
+    };
+
+    calculateQuantity(){
+        let cartQuantity=0;
+        this.cartItems.forEach((item)=>{
+            cartQuantity += item.quantity;
+        });
+
+        const cartNumberDisplay = document.querySelector('.js-cart-quantity');
+        if (cartNumberDisplay) {
+        cartNumberDisplay.textContent = cartQuantity;
+        }
     }
 }
-
 export const Personalcart = new cart('cart-oop');
 
+window.onload = function() {
+    Personalcart.calculateQuantity(); // Display number of items in cart, if applicable
+  };
