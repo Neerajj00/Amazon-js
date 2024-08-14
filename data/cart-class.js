@@ -76,5 +76,4 @@ class cart {
 }
 
 export const Personalcart = new cart('cart-oop');
-console.log(Personalcart);
 
