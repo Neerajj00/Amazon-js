@@ -84,7 +84,8 @@ class cart {
         if (cartNumberDisplay) {
         cartNumberDisplay.textContent = cartQuantity;
         }
-    }
+    };
+
 }
 export const Personalcart = new cart('cart-oop');
 
