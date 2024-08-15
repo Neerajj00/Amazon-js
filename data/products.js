@@ -92,7 +92,6 @@ export function getProducts(fun){
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
-getProducts();
 
 /*
 export const products = [
