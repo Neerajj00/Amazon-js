@@ -1,6 +1,9 @@
 import {Personalcart} from '../data/cart-class.js';
-import {products} from '../data/products.js';
+import {products,getProducts} from '../data/products.js';
 
+getProducts(renderProductsGrid);
+
+function renderProductsGrid(){
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -63,7 +66,6 @@ products.forEach((product) => {
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 
-
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () => {
@@ -78,3 +80,5 @@ document.querySelectorAll('.js-add-to-cart')
       Personalcart.calculateQuantity();
     });
   });
+
+}
